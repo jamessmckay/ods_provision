@@ -4,7 +4,8 @@
   "description": "Simple API that provisions an Ed-Fi ODS/API",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "lint": "eslint -f pretty \"**/*.js\" --fix"
   },
   "keywords": [],
   "author": "James McKay",
@@ -16,6 +17,9 @@
     "pg": "^8.7.1"
   },
   "devDependencies": {
+    "eslint": "^8.5.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-formatter-pretty": "^4.1.0",
     "nodemon": "^2.0.15"
   }
 }

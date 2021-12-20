@@ -1,15 +1,15 @@
 const getOffset = (currentPage = 1, listPerPage) => {
-    return (currentPage - 1) * [listPerPage];
-  }
-  
+  return (currentPage - 1) * [listPerPage];
+};
+
 const emptyOrRows = (rows) => {
-    if (!rows) {
-      return [];
-    }
-    return rows;
+  if (!rows) {
+    return [];
   }
-  
-  module.exports = {
-    getOffset,
-    emptyOrRows
-  }
+  return rows;
+};
+
+module.exports = {
+  getOffset,
+  emptyOrRows,
+};
