@@ -1,4 +1,4 @@
-const {Client} = require('pg');
+const { Client } = require('pg');
 const config = require('../config').postgres;
 
 const getClient = (dbName) => {
@@ -28,17 +28,30 @@ const query = async (dbName, query, params) => {
 
   await client.end();
 
-  return {rows: res.rows, fields: res.fields};
+  return { rows: res.rows, fields: res.fields };
 };
 
 const createDatabase = async (context) => {
   console.log(context);
   const sql = `CREATE DATABASE ${context.name} TEMPLATE ${context.template};`;
+  console.log(sql);
 
   return await query('postgres', sql, null);
+};
+
+const databaseExists = async (database) => {
+  console.log(database);
+
+  const sql = `SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname='${database}');`;
+
+  const { rows } = await query('postgres', sql, null);
+  console.log(sql, rows);
+
+  return rows[0].exists;
 };
 
 module.exports = {
   query,
   createDatabase,
+  databaseExists,
 };

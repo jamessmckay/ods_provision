@@ -1,30 +1,26 @@
+/* eslint-disable object-curly-spacing */
 const Router = require('express-promise-router');
-const {createDatabase} = require('../services/db');
+const provisionDatabase = require('../services/provisionDatabase');
+
 const router = new Router();
 
-router.post('/ods', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    const {name, template} = req.body;
+    const { name, template } = req.body;
 
     console.log(name, template);
 
-    if (!name) {
-      return res
-          .status(400)
-          .json({success: false, msg: 'must include the database name to be created'});
-    } else if (!template) {
-      return res
-          .status(400)
-          .json({success: false, msg: 'must include the database name to be created'});
-    }
-
-    const result = await createDatabase({name, template});
+    const result = await provisionDatabase(name, template);
 
     console.log(result);
 
+    if (!result.success) {
+      return res.status(result.statusCode).json({ msg: result.message });
+    }
+
     res.status(201).send();
   } catch (err) {
-    console.error(`Error while create database `, err.message);
+    console.error(`Error while create database: ${err.message}`);
     next(err);
   }
 });

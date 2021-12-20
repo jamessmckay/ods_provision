@@ -28,6 +28,7 @@ const getTemplates = async (page = 1) => {
   };
 };
 
+
 module.exports = {
   getTemplates,
 };

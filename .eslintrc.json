@@ -19,6 +19,7 @@
         "ignoreComments": true,
         "ignoreTrailingComments": true
       }
-    ]
+    ],
+    "object-curly-spacing": "off"
   }
 }
