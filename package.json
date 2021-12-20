@@ -1,0 +1,21 @@
+{
+  "name": "ods_provision",
+  "version": "0.1.0",
+  "description": "Simple API that provisions an Ed-Fi ODS/API",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "James McKay",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
