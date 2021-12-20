@@ -1,9 +1,7 @@
-const express = require('express');
+const Router = require('express-promise-router');
+const router = new Router();
 
-// eslint-disable-next-line new-cap
-const router = express.Router();
-
-const {getTemplates} = require('../services/db_template');
+const {getTemplates} = require('../services/template');
 
 /* GET installed database templates listing. */
 router.get('/', async (req, res, next) => {

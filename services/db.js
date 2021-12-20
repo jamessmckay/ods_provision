@@ -9,26 +9,36 @@ const getClient = (dbName) => {
     password: config.password,
     database: `${dbName}`,
   };
-  // console.log(context);
 
   return new Client(context);
 };
 
 const query = async (dbName, query, params) => {
-  try {
-    const client = getClient(dbName);
+  const client = getClient(dbName);
 
-    await client.connect();
+  await client.connect();
 
-    const {rows} = await client.query(query, params);
-    await client.end();
+  let res = '';
 
-    return rows;
-  } catch (err) {
-    console.log(err);
+  if (params) {
+    res = await client.query(query, params);
+  } else {
+    res = await client.query(query);
   }
+
+  await client.end();
+
+  return {rows: res.rows, fields: res.fields};
+};
+
+const createDatabase = async (context) => {
+  console.log(context);
+  const sql = `CREATE DATABASE ${context.name} TEMPLATE ${context.template};`;
+
+  return await query('postgres', sql, null);
 };
 
 module.exports = {
   query,
+  createDatabase,
 };

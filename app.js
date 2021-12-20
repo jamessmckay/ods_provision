@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const {settings} = require('./config');
+const template = require('./routes/template');
+const provision = require('./routes/provision');
 
 const app = express();
 
@@ -10,8 +12,12 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // routes
+// template database
 app.use('/api/templates', template);
+// provision database
+app.use('/api/provision', provision);
 
+// home
 app.get('/', (req, res) => {
   res.json({version: '0.1.0'});
 });

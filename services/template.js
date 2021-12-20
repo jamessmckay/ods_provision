@@ -2,7 +2,6 @@ const db = require('./db');
 const helper = require('../helper');
 const {listPerPage} = require('../config').settings;
 
-
 const getTemplates = async (page = 1) => {
   const offset = helper.getOffset(page, listPerPage);
 
@@ -16,9 +15,8 @@ const getTemplates = async (page = 1) => {
 
   console.log(sql);
 
-  const rows = await db.query('postgres', sql, [offset, listPerPage]);
+  const {rows} = await db.query('postgres', sql, [offset, listPerPage]);
   const templates = helper.emptyOrRows(rows).map((row) => row.template);
-
 
   return {
     data: {templates: templates},
