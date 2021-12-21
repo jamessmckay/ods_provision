@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const {settings} = require('./config');
 const template = require('./routes/template');
 const provision = require('./routes/provision');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -10,6 +11,8 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   app.disable('x-powered-by');
   res.removeHeader('X-Powered-By');
