@@ -9,7 +9,12 @@ const app = express();
 // middleware
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  app.disable('x-powered-by');
+  res.removeHeader('X-Powered-By');
+  next();
+});
 
 // routes
 // template database
@@ -19,7 +24,7 @@ app.use('/api/provision', provision);
 
 // home
 app.get('/', (req, res) => {
-  res.json({version: '0.1.0'});
+  res.json({ version: settings.version });
 });
 
 app.listen(settings.port, () => {
