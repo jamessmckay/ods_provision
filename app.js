@@ -2,9 +2,14 @@ const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
 const {settings} = require('./config');
-const template = require('./routes/template');
-const provision = require('./routes/provision');
 const bodyParser = require('body-parser');
+
+// routes
+const templatesRoute = require('./routes/template');
+const provisionRoute = require('./routes/provision');
+const vendorRoute = require('./routes/vendor');
+const profileRoute = require('./routes/profile');
+const keyRoute = require('./routes/keymgmt');
 
 const app = express();
 
@@ -20,11 +25,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// routes
-// template database
-app.use('/api/templates', template);
+// apis
+// templates
+app.use('/api/templates', templatesRoute);
+
 // provision database
-app.use('/api/provision', provision);
+app.use('/api/provision', provisionRoute);
+
+// vendor management
+app.use('/api/vendors', vendorRoute);
+
+// key management
+app.use('/api/keymgmt', keyRoute);
+
+// profiles management
+app.use('/api/profiles', profileRoute);
+
 
 // home
 app.get('/', (req, res) => {

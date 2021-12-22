@@ -50,8 +50,23 @@ const databaseExists = async (database) => {
   return rows[0].exists;
 };
 
+const buildDatabaseName = (application, database, instance, schoolYear) => {
+  let dbName = `${application}_${database}`;
+
+  if (instance) {
+    dbName += `_${instance}`;
+  }
+
+  if (schoolYear) {
+    dbName += `_${schoolYear}`;
+  }
+
+  return dbName;
+};
+
 module.exports = {
   query,
   createDatabase,
   databaseExists,
+  buildDatabaseName,
 };
