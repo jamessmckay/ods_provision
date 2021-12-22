@@ -11,20 +11,9 @@ const getTemplates = async (page = 1) => {
     from pg_database
     where datistemplate=true
         and datname not in ('template1', 'template0')
-    OFFSET $1 LIMIT $2;
     `;
 
-  console.log(sql);
-
-  const totalSql = `
-    select count(*) as total
-    from pg_database
-    where datistemplate=true
-    and datname not in ('template1', 'template0');`;
-
-  const total = Number((await db.query('postgres', totalSql)).rows[0].total);
-
-  const { rows } = await db.query('postgres', sql, [offset, listPerPage]);
+  const { rows, total } = await db.query('postgres', sql, [offset, listPerPage]);
 
   console.log(rows);
 

@@ -18,17 +18,23 @@ const query = async (dbName, query, params) => {
 
   await client.connect();
 
-  let res = '';
+  let res;
+  const sql = `${(query.substr(-1) === ';') ? query.slice(0, -1) : query}`;
+  console.log(sql);
 
   if (params) {
-    res = await client.query(query, params);
+    res = await client.query(`${sql} OFFSET $1 LIMIT $2;`, params);
   } else {
-    res = await client.query(query);
+    res = await client.query(sql + ';');
   }
+
+  console.log(`select count(*) as total from (${sql});`);
+
+  const total = Number((await client.query(`select count(*) as total from (${sql}) a;`)).rows[0].total);
 
   await client.end();
 
-  return { rows: res.rows, fields: res.fields };
+  return { rows: res.rows, fields: res.fields, total: total };
 };
 
 const createDatabase = async (context) => {

@@ -7,20 +7,9 @@ const getProfiles = async (application, instance, page =1) => {
   const offset = helper.getOffset(page, listPerPage);
   const dbName = db.buildDatabaseName(application, 'admin', instance);
 
-  const sql = `
-    select profilename
-    from dbo.profiles
-    OFFSET $1 LIMIT $2;
-    `;
+  const sql = 'select profilename from dbo.profiles';
 
-  console.log(sql);
-
-  const totalSql = `
-    select count(*) as total
-    from dbo.profiles;`;
-
-  const total = Number((await db.query(dbName, totalSql)).rows[0].total);
-  const { rows } = await db.query(dbName, sql, [offset, listPerPage]);
+  const { rows, total } = await db.query(dbName, sql, [offset, listPerPage]);
 
   console.log(rows);
 
