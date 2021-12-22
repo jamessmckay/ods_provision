@@ -1,1 +1,3 @@
+*.orig
+target/
 node_modules/
