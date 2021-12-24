@@ -1,15 +1,15 @@
-const db = require('./db');
+const {query, getAdminDatabase} = require('./db');
 const helper = require('../helper');
 const {listPerPage} = require('../config').settings;
 const {Response, Metadata} = require('./response');
 
 const getProfiles = async (application, instance, page =1) => {
   const offset = helper.getOffset(page, listPerPage);
-  const dbName = db.buildDatabaseName(application, 'admin', instance);
+  const dbName = getAdminDatabase(application, instance);
 
   const sql = 'select profilename from dbo.profiles';
 
-  const { rows, total } = await db.query(dbName, sql, [offset, listPerPage]);
+  const { rows, total } = await query(dbName, sql, [offset, listPerPage]);
 
   console.log(rows);
 

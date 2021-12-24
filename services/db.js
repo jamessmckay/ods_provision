@@ -70,9 +70,23 @@ const buildDatabaseName = (application, database, instance, schoolYear) => {
   return dbName;
 };
 
+const getAdminDatabase = (application, instance) => {
+  return buildDatabaseName(application, 'admin', instance);
+};
+
+const getSecurityDatabase = (application) => {
+  return buildDatabaseName(application, 'security');
+};
+
+const getOdsDatabase = (application, instance, schoolYear) => {
+  return buildDatabaseName(application, 'ods', instance, schoolYear);
+};
+
 module.exports = {
   query,
   createDatabase,
   databaseExists,
-  buildDatabaseName,
+  getAdminDatabase,
+  getOdsDatabase,
+  getSecurityDatabase,
 };

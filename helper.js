@@ -9,7 +9,15 @@ const emptyOrRows = (rows) => {
   return rows;
 };
 
+const getContextFromRequest = (req) => {
+  const instance = req.headers['x-instance'];
+  const application = req.headers['x-application'];
+
+  return { instance, application };
+};
+
 module.exports = {
   getOffset,
   emptyOrRows,
+  getContextFromRequest,
 };

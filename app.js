@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const templatesRoute = require('./routes/template');
 const provisionRoute = require('./routes/provision');
 const vendorRoute = require('./routes/vendor');
+const namespaceRoute = require('./routes/namespaces');
 const profileRoute = require('./routes/profile');
 const keyRoute = require('./routes/keymgmt');
 
@@ -34,13 +35,13 @@ app.use('/api/provision', provisionRoute);
 
 // vendor management
 app.use('/api/vendors', vendorRoute);
+app.use('/api/vendors/namespaces', namespaceRoute);
 
 // key management
 app.use('/api/keymgmt', keyRoute);
 
 // profiles management
 app.use('/api/profiles', profileRoute);
-
 
 // home
 app.get('/', (req, res) => {
