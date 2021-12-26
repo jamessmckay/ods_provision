@@ -1,21 +1,20 @@
-const {query, getAdminDatabase} = require('./db');
+const { getAdminDatabase } = require('./db');
 const helper = require('../helper');
-const {listPerPage} = require('../config').settings;
-const {Response, Metadata} = require('./response');
+const { listPerPage } = require('../config').settings;
+const { getRepo } = require('./repository');
 
-const getProfiles = async (application, instance, page =1) => {
+const getProfiles = async (application, instance, page = 1) => {
   const offset = helper.getOffset(page, listPerPage);
   const dbName = getAdminDatabase(application, instance);
+  const repo = await getRepo(dbName);
 
-  const sql = 'select profilename from dbo.profiles';
+  const profiles = await repo.profile.findAll({
+    limit: listPerPage,
+    offset: offset,
+    include: {model: repo.application, as: 'applications'},
+  });
 
-  const { rows, total } = await query(dbName, sql, [offset, listPerPage]);
-
-  console.log(rows);
-
-  const profiles = helper.emptyOrRows(rows).map((row) => row.profilename);
-
-  return new Response({ profiles: profiles }, new Metadata(page, listPerPage, total));
+  return profiles;
 };
 
 module.exports = {

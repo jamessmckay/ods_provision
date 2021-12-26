@@ -1,7 +1,7 @@
 const Router = require('express-promise-router');
 const router = new Router();
 const vendorService = require('../services/vendor');
-const { getContextFromRequest } = require('../helper');
+const { getContextFromRequest, generateKeySecret } = require('../helper');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -24,6 +24,15 @@ router.get('/:vendorid', async (req, res, next) => {
     const result = await vendorService.getVendor(application, instance, vendorid);
 
     res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/', async (req, res, next) => {
+  try {
+    const {key, secret} = generateKeySecret(24, 48);
+    res.status(201).json({key: key, secret: secret});
   } catch (err) {
     next(err);
   }

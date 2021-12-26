@@ -35,10 +35,7 @@ app.use('/api/provision', provisionRoute);
 
 // vendor management
 app.use('/api/vendors', vendorRoute);
-app.use('/api/vendors/namespaces', namespaceRoute);
-
-// key management
-app.use('/api/keymgmt', keyRoute);
+app.use('/api/vendors/keys', keyRoute);
 
 // profiles management
 app.use('/api/profiles', profileRoute);
