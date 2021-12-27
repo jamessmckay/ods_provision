@@ -34,15 +34,17 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Application.associate = async (models) => {
-    Application.hasMany(models.applicationEducationOrganizations, {
-      foreignKey: 'application_applicationid',
-      as: 'applicationEducationOrganizations',
-    });
-
     Application.belongsToMany(models.profile, {
       through: 'profileApplications',
       foreignKey: 'application_applicationid',
-      as: 'profiles',
+    });
+
+    Application.hasOne(models.vendor, {
+      foreignKey: 'vendorid',
+    });
+
+    Application.hasOne(models.apiClient, {
+      foreignKey: 'application_applicationid',
     });
   };
 

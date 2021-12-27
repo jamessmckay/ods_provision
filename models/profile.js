@@ -16,12 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  Profile.associate = async (models) => {
-    // Profile.hasMany(models.profileApplications, {
-    //   foreignKey: 'profile_profileid',
-    //   as: 'profileApplications',
-    // });
-    Profile.belongsToMany(models.application, {
+  Profile.associate = async (model) => {
+    Profile.belongsToMany(model.application, {
       through: 'profileApplications',
       foreignKey: 'profile_profileid',
       as: 'applications',

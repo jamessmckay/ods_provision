@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
   Vendor.associate = async (models) => {
     Vendor.hasMany(models.vendorNamespacePrefixes, {
       foreignKey: 'vendor_vendorid',
-      as: 'vendorNamespacePrefixes',
     });
   };
 

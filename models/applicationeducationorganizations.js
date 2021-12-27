@@ -21,12 +21,5 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  ApplicationEducationOrganizations.associate = async (models) => {
-    ApplicationEducationOrganizations.belongsTo(models.application, {
-      foreignKey: 'application_applicationid',
-      as: 'application',
-    });
-  };
-
   return ApplicationEducationOrganizations;
 };

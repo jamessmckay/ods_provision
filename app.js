@@ -8,8 +8,8 @@ const bodyParser = require('body-parser');
 const templatesRoute = require('./routes/template');
 const provisionRoute = require('./routes/provision');
 const vendorRoute = require('./routes/vendor');
-const namespaceRoute = require('./routes/namespaces');
 const profileRoute = require('./routes/profile');
+const applicationRoute = require('./routes/application');
 const keyRoute = require('./routes/keymgmt');
 
 const app = express();
@@ -39,6 +39,9 @@ app.use('/api/vendors/keys', keyRoute);
 
 // profiles management
 app.use('/api/profiles', profileRoute);
+
+// application
+app.use('/api/applications', applicationRoute);
 
 // home
 app.get('/', (req, res) => {
