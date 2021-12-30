@@ -22,16 +22,22 @@ const getApplications = async (application, instance, page = 1) => {
   return applications;
 };
 
-const getApplicationEducationOrganizations = async (application, instance) => {
+const getApplicationEducationOrganizations = async (application, instance, page = 1) => {
   const dbName = getAdminDatabase(application, instance);
+  const offset = helper.getOffset(page, listPerPage);
   const repo = await getRepo(dbName);
 
   const [results] = await repo.sequelize.query(`
   select apiclient_apiclientid as apiclientid, educationorganizationid as edorgid
   from dbo.apiclientapplicationeducationorganizations a
   inner join dbo.applicationeducationorganizations b
-    on a.applicationedorg_applicationedorgid = b.applicationeducationorganizationid`, {
+    on a.applicationedorg_applicationedorgid = b.applicationeducationorganizationid
+  OFFSET :offset LIMIT :limit`, {
     nest: false,
+    replacements: {
+      offset: offset,
+      limit: listPerPage,
+    },
   });
 
   const group = results.reduce((obj, item) => {
