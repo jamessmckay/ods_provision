@@ -1,6 +1,6 @@
 const Router = require('express-promise-router');
 const router = new Router();
-const {getApplications, getApplicationEducationOrganizations} = require('../services/application');
+const {getApplications, getApplicationEducationOrganizations, addApplication} = require('../services/application');
 const {getContextFromRequest} = require('../helper');
 
 router.get('/', async (req, res, next) => {
@@ -22,6 +22,16 @@ router.get('/educationOrganizations', async (req, res, next) => {
     console.error(`Error while getting education organiztaions: ${err}`);
     next(err);
   };
+});
+
+router.post('/', async (req, res, next) => {
+  try {
+    const {application, instance} = getContextFromRequest(req);
+    res.status(201).json(await addApplication(application, instance, req.body));
+  } catch (err) {
+    console.error(`Error while adding an application: ${err}`);
+    next(err);
+  }
 });
 
 module.exports = router;
