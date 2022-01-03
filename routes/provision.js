@@ -4,6 +4,12 @@ const provisionDatabase = require('../services/provisionDatabase');
 
 const router = new Router();
 
+/* Sample request body
+{
+    "name": "test9",
+    "template": "tea_minimal_template_320c"
+}
+*/
 router.post('/', async (req, res, next) => {
   try {
     const { name, template } = req.body;

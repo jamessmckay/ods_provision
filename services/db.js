@@ -28,13 +28,9 @@ const query = async (dbName, query, params) => {
     res = await client.query(sql + ';');
   }
 
-  console.log(`select count(*) as total from (${sql});`);
-
-  const total = Number((await client.query(`select count(*) as total from (${sql}) a;`)).rows[0].total);
-
   await client.end();
 
-  return { rows: res.rows, fields: res.fields, total: total };
+  return { rows: res.rows, fields: res.fields};
 };
 
 const createDatabase = async (context) => {
@@ -83,7 +79,6 @@ const getOdsDatabase = (application, instance, schoolYear) => {
 };
 
 module.exports = {
-  query,
   createDatabase,
   databaseExists,
   getAdminDatabase,
