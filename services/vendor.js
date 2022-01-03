@@ -11,7 +11,6 @@ const getVendors = async (application, instance, page = 1) => {
   const vendors = await repo.vendor.findAll( {
     limit: listPerPage,
     offset: offset,
-    include: {model: repo.vendorNamespacePrefixes, as: 'vendorNamespacePrefixes'},
   });
 
   return vendors;
@@ -22,7 +21,7 @@ const getVendor = async (application, instance, vendorId) => {
   const repo = await getRepo(dbName);
 
   const vendor = await repo.vendor.findByPk(vendorId, {
-    include: {model: repo.vendorNamespacePrefixes, as: 'vendorNamespacePrefixes'},
+    include: {model: repo.vendorNamespacePrefixes},
   });
 
   return vendor;
