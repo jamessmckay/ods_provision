@@ -18,6 +18,7 @@ const config = {
     version: version,
     scheme: scheme,
   },
+  dbTemplates: env.DBTEMPLATES || './db_templates',
 };
 
 module.exports = config;
